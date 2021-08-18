@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+
+</head>
+
+<body>
+    <h1> CRICKET MATCH</h1>
+
+    <form>
+        <select name="teams" id="teams">
+
+            <option value=null>Select a team</option>
+            <option value="ind">ind</option>
+            <option value="aus">aus</option>
+            <option value="pak">pak</option>
+            <option value="nz">nz</option>
+            <option value="wi">wi</option>
+
+        </select>
+
+
+
+        <input type="number" name="scoreboard" id="scoreboard" disabled><label for="score">score</label>
+        <input type="number" name="wicket" id="wicketboard" disabled><label for="wicket">wicket</label>
+
+        </br>
+        <input type="radio" name="score" id="rad" value="1"><label for="1">1</label>
+        <input type="radio" name="score" id="rad" value="2"><label for="2">2</label>
+        <input type="radio" name="score" id="rad" value="4"><label for="4">4</label>
+        <input type="radio" name="score" id="rad" value="6"><label for="6">6</label>
+
+        </br>
+        <input type="button" id="run" value="run">
+        <input type="button" id="out" value="out">
+    </form>
+
+    <script>
+        let teams = {
+            "ind": {
+                "score": 0,
+                "wicket": 0
+            },
+            "aus": {
+                "score": 0,
+                "wicket": 0
+            },
+            "wi": {
+                "score": 0,
+                "wicket": 0
+            },
+            "nz": {
+                "score": 0,
+                "wicket": 0
+            },
+            "pak": {
+                "score": 0,
+                "wicket": 0
+            },
+        };
+
+
+        let innings = null;
+
+
+
+
+
+
+        const run = document.getElementById('run')
+        const selectedteam = document.getElementById('teams')
+        const out = document.getElementById('out')
+        const point = document.getElementsByName('score')
+        const scoreboard = document.getElementById('scoreboard')
+        const wicketboard = document.getElementById('wicketboard')
+
+
+
+        selectedteam.addEventListener('change', () => {
+            innings = document.forms[0].teams.value
+            console.log(document.forms[0].teams.value);
+            wicketboard.value = teams[innings].wicket
+            scoreboard.value = teams[innings].score
+
+
+        })
+
+
+
+        run.addEventListener('click', function (e) {
+            if (innings == null) {
+                alert("No teams selected");
+                return
+            }
+
+            if (teams[innings].wicket == 10) {
+                alert("All out");
+                return
+            }
+            let pointscored = point.value;
+            for (i = 0; i < point.length; i++) {
+                if (point[i].checked) {
+                    console.log(point[i].value)
+                    teams[innings].score = teams[innings].score + parseInt(point[i].value)
+                    scoreboard.value = teams[innings].score
+                    point[i].checked = false
+                }
+            }
+
+
+
+        })
+
+        out.addEventListener('click', function (e) {
+            if (innings == null) {
+                alert("No teams selected");
+                return
+            }
+            if (teams[innings].wicket == 10) {
+                alert("All out");
+                return
+            }
+            console.log(teams[innings].wicket)
+            teams[innings].wicket = teams[innings].wicket + 1;
+            wicketboard.value = teams[innings].wicket
+
+        })
+    </script>
+
+</body>
+</html>
